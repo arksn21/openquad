@@ -4,12 +4,10 @@
 source ~/.bashrc
 
 printf "Launching mavros , px4 , gazebo , Running QGround Control\n"
-xterm /home/tahseer/Desktop/OpenQuad/sh_files/QGroundControl.sh &
-xterm /home/tahseer/Desktop/OpenQuad/sh_files/mavros.sh &
-xterm /home/tahseer/Desktop/OpenQuad/sh_files/px4.sh &
-xterm /home/tahseer/Desktop/OpenQuad/sh_files/gazebo.sh 
+xterm /home/tahseer/catkin_ws/src/openquad/sh_files/QGroundControl.sh &
+xterm /home/tahseer/catkin_ws/src/openquad/sh_files/mavros.sh &
+xterm /home/tahseer/catkin_ws/src/openquad/sh_files/px4.sh &
+xterm /home/tahseer/catkin_ws/src/openquad/sh_files/gazebo.sh 
 
 printf "\nKilling gazebo client and server\n"
-/home/tahseer/Desktop/OpenQuad/sh_files/kill.sh &
-
-
+/home/tahseer/catkin_ws/src/openquad/sh_files/kill.sh &
