@@ -1,5 +1,17 @@
 #!/usr/bin/env python
 
+###################################################################################################
+# Position Control of the Iris Drone with respect to world coordinates
+
+# Controls:
+# Use Arrow keys to control the roll and pitch of the drone. 
+# Use W to ascend and S to descend. 
+# Use A to yaw left and D to yaw right
+###################################################################################################
+
+# Gain of the flight controller
+gain = 0.5
+
 import sys
 import rospy
 from mavros_msgs.msg import *
@@ -11,7 +23,9 @@ pygame.init()
 windowSize = width,height = 10,10
 screen = pygame.display.set_mode(windowSize)
 
+
 def arm():
+    # func to arm the drone
     rospy.wait_for_service('/mavros/cmd/arming')
     try:
         armService = rospy.ServiceProxy('/mavros/cmd/arming', mavros_msgs.srv.CommandBool)
@@ -24,6 +38,7 @@ def arm():
         print ("Arming Service Unavailable: %s"%e)
 
 def offboard_mode():
+    # func to change the flight mode to offboard
     rospy.wait_for_service('/mavros/set_mode')
     try:
         flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
@@ -33,6 +48,9 @@ def offboard_mode():
         print ("Mode Change Failed: %s" %e)
 
 def talker():
+    # function to publish the target position of the drone
+    global gain
+
     ascending = False
     descending = False
     forward = False
@@ -55,7 +73,7 @@ def talker():
         required_position.position.z = 0.0
 
         required_position.coordinate_frame = 1
-        required_position.type_mask = int('010111111000', 2)
+        required_position.type_mask = int('000111111000', 2)
 
         pub.publish(required_position)
         rate.sleep()
@@ -68,98 +86,94 @@ def talker():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w:
-                    print("Ascending")
                     ascending = True
 
                 if event.key == pygame.K_s:
-                    print("Descending")
                     descending = True
 
                 if event.key == pygame.K_UP:
-                    print("Forward")
                     forward = True
 
                 if event.key == pygame.K_DOWN:
-                    print("Backward")
                     backward = True
 
                 if event.key == pygame.K_LEFT:
-                    print("Roll Left")
                     roll_left = True
 
                 if event.key == pygame.K_RIGHT:
-                    print("Roll Right")
                     roll_right = True
 
                 if event.key == pygame.K_a:
-                    print("Yaw Left")
                     yaw_left = True
 
                 if event.key == pygame.K_d:
-                    print("Yaw Right")
                     yaw_right = True
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
-                    print("Ascending")
                     ascending = False
 
                 if event.key == pygame.K_s:
-                    print("Descending")
                     descending = False
 
                 if event.key == pygame.K_UP:
-                    print("Forward")
                     forward = False
 
                 if event.key == pygame.K_DOWN:
-                    print("Backward")
                     backward = False
 
                 if event.key == pygame.K_LEFT:
-                    print("Roll Left")
                     roll_left = False
 
                 if event.key == pygame.K_RIGHT:
-                    print("Roll Right")
                     roll_right = False
 
                 if event.key == pygame.K_a:
-                    print("Yaw Left")
                     yaw_left = False
 
                 if event.key == pygame.K_d:
-                    print("Yaw Right")
                     yaw_right = False
 
-            if ascending:
-                required_position.position.z = required_position.position.z + 0.5
+        if ascending:
+            required_position.position.z = required_position.position.z + gain
+            print("Ascending")
 
-            if descending:
-                required_position.position.z = required_position.position.z - 0.5
+        if descending:
+            required_position.position.z = required_position.position.z - gain
+            print("Descending")
 
-            if forward:
-                required_position.position.y = required_position.position.y + 0.5
+        if forward:
+            required_position.position.y = required_position.position.y + gain
+            print("Forward")
 
-            if backward:
-                required_position.position.y = required_position.position.y - 0.5
+        if backward:
+            required_position.position.y = required_position.position.y - gain
+            print("Backward")
 
-            if roll_left:
-                required_position.position.x = required_position.position.x - 0.5
+        if roll_left:
+            required_position.position.x = required_position.position.x - gain
+            print("Roll Left")
 
-            if roll_right:
-                required_position.position.x = required_position.position.x + 0.5
+        if roll_right:
+            required_position.position.x = required_position.position.x + gain
+            print("Roll Right")
 
-            if yaw_left:
-                required_position.yaw = required_position.position.z - 0.5
+        if yaw_left:
+            required_position.yaw = required_position.yaw + gain
+            print("Yaw Left")
 
-            if yaw_right:
-                required_position.yaw = required_position.position.z + 0.5       
+        if yaw_right:
+            required_position.yaw = required_position.yaw - gain
+            print("Yaw Right")       
 
         pygame.display.flip()
 
         required_position.coordinate_frame = 1
-        required_position.type_mask = int('010111111000', 2)
+
+        # see mavros msg Position Target for bit masking
+        # In this case postion control is enabled
+        # mask or unmask all the three x, y & z to take effect
+        required_position.type_mask = int('000111111000', 2)
 
         pub.publish(required_position)
         rate.sleep()
