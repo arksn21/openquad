@@ -13,3 +13,10 @@ export ROS_MASTER_URI=http://localhost:11311
 # On doing ls
 # models worlds launch
 export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:~/catkin_ws/src/openquad/openquad_gazebo
+
+# for sourcing
+alias sc='source ~/.bashrc'
+# for opening bashrc in vscode
+alias bc='code ~/.bashrc'
+# for launching the simulation
+alias sim='~/catkin_ws/src/openquad/sh_files/simulation.sh'

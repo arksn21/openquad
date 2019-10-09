@@ -6,13 +6,14 @@ export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/sitl_gazebo
 
 PS3='Please enter your choice: '
-options=("Empty World" "FPV Cam World" "Optical Flow World" "Obstacle Avoidance" "Lidar World" "Vision World" "IRlock World" "Quit")
+options=("Chair World" "FPV Cam World" "Optical Flow World" "Obstacle Avoidance" "Lidar World" "Vision World" "IRlock World" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Empty World")
-            echo "You chose Empty World"
-            roslaunch gazebo_ros empty_world.launch world_name:=$(pwd)/Tools/sitl_gazebo/worlds/iris.world
+        "Chair World")
+            echo "You chose Chair World"
+            # roslaunch gazebo_ros empty_world.launch world_name:=$(pwd)/Tools/sitl_gazebo/worlds/chair_world.world
+            roslaunch openquad chair_world.launch
             ;;
         "FPV Cam World")
             echo "You chose FPV Cam World"

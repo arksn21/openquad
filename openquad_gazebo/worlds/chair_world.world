@@ -12,6 +12,11 @@
       <uri>model://ground_plane</uri>
     </include>
 
+    <include>
+      <uri>model://models/iris</uri>
+      <pose>1.01 0.98 0.83 0 0 1.14</pose>
+    </include>
+
     <!-- Custom model chair -->
     <include>
       <!-- chair is the name of the directory inside models-->
