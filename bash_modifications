@@ -20,3 +20,6 @@ alias sc='source ~/.bashrc'
 alias bc='code ~/.bashrc'
 # for launching the simulation
 alias sim='~/catkin_ws/src/openquad/sh_files/simulation.sh'
+
+# velocity control
+alias vel='rosrun openquad velocity_control.py'
