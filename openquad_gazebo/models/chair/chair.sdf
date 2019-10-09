@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <!-- Should be same as name specified in config file-->
+  <model name="my_chair">
+  <!-- Static means physics will not be calculated for the model.
+  It will remain a rigid and stationary body under collision. It saves
+  us processing time and simulation runs faster. For non static you need 
+  to specify moment of inertia and other parameters-->
+    <static>true</static>
+
+    <!-- Specifying the links. Since it is a simple object it has only 1 link-->
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <!-- Instead of mesh we can use simple objects like box, cylinder etc.
+          It will speed up simulation-->
+
+          <!-- 
+            <box>
+            <size>1 1 1</size>
+            </box>
+          -->
+          <!--Comment mesh for using box-->
+          <mesh>
+            <uri>model://models/chair/meshes/model.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+      <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://models/chair/meshes/model.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
