@@ -1,0 +1,15 @@
+# Local use
+export ROS_HOSTNAME=localhost
+export ROS_MASTER_URI=http://localhost:11311
+
+# Connecting multiple computers. My computer is the master
+# export ROS_HOSTNAME=192.168.43.161
+# export ROS_MASTER_URI=http://192.168.43.161:11311
+
+# for using custom models in a specific location in gazebo
+# Example uri <uri>model://models/chair</uri>
+# Directory structure 
+# ~/catkin_ws/src/openquad/openquad_gazebo 
+# On doing ls
+# models worlds launch
+export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:~/catkin_ws/src/openquad/openquad_gazebo
