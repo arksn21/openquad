@@ -29,7 +29,7 @@ do
             ;;
         "Lidar World")
             echo "You chose Lidar World"
-            roslaunch gazebo_ros empty_world.launch world_name:=$(pwd)/Tools/sitl_gazebo/worlds/iris_rplidar.world
+            roslaunch openquad lidar.launch
             ;;
         "Vision World")
             echo "You chose Vision World"
