@@ -12,7 +12,7 @@ Steps for running simulation:
 3)create catkin packages inside simulation workspace:
 	1)go to simulation_ws/src
 	2)create catkin package with dependency: urdf and name "m2wr_description"
-	3)copy the folder m2wr_description from simulation_ws/src inside this folder to  simulation_ws/src you have built
+	3)copy the folder m2wr_description  inside this folder to  simulation_ws/src you have built
 4) To run the simulation :
 	1)open two terminals: one for gazebo and another for launch file
 	2)In gazebo terminal launch world using: roslaunch gazebo_ros /*name of world*/ (For e.g. : roslaunch gazebo_ros empty_world.launch)
